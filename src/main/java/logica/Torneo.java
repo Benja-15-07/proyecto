@@ -34,4 +34,8 @@ public class Torneo {
     public void registrarResultado(Enfrentamiento enfrentamiento,int puntaje1, int puntaje2){
         enfrentamiento.registrarResultado(criterio, puntaje1, puntaje2);
     }
+
+    public void generarEnfrentamiento(){
+        enfrentamientos = formato.generarEnfrentamientos(participantes);
+    }
 }
