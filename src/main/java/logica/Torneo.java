@@ -26,4 +26,8 @@ public class Torneo {
         this.enfrentamientos = new ArrayList<>();
         this.clasificacion = new Clasificacion();
     }
+
+    public void addParticipante(Participante participante){
+        participantes.add(participante);
+    }
 }
