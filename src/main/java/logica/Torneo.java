@@ -13,6 +13,7 @@ public class Torneo {
     private ArrayList<Participante> participantes;
     private ArrayList<Enfrentamiento> enfrentamientos;
     private Clasificacion clasificacion;
+    private Calendario calendario;
 
 
     public Torneo(String nombre, String disciplina, LocalDate fechaInicio, LocalDate fechaFin, FormatoStrategy formato, CriterioStrategy criterio) {
@@ -25,17 +26,26 @@ public class Torneo {
         this.participantes = new ArrayList<>();
         this.enfrentamientos = new ArrayList<>();
         this.clasificacion = new Clasificacion();
+        this.calendario = new Calendario();
     }
 
     public void addParticipante(Participante participante){
         participantes.add(participante);
+        actualizar();
     }
 
     public void registrarResultado(Enfrentamiento enfrentamiento,int puntaje1, int puntaje2){
         enfrentamiento.registrarResultado(criterio, puntaje1, puntaje2);
+        actualizar();
     }
 
     public void generarEnfrentamiento(){
         enfrentamientos = formato.generarEnfrentamientos(participantes);
+        actualizar();
+    }
+
+    public void actualizar(){
+        this.clasificacion.actualizar(participantes);
+        this.calendario.actualizar(enfrentamientos);
     }
 }
