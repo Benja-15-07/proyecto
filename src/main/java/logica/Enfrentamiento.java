@@ -18,6 +18,10 @@ public class Enfrentamiento {
         this.ganador = criterio.evaluarResultado(this);
     }
 
+    public boolean estadoFinalizado(){
+        return resultado != null;
+    }
+
     public Participante getParticipante1() {
         return participante1;
     }
