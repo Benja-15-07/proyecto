@@ -8,7 +8,12 @@ public class Calendario {
     public Calendario() {
         this.calendario = new ArrayList<>();
     }
-    
+
+    public void actualizar(ArrayList<Enfrentamiento> enfrentamientos){
+        calendario.clear();
+        calendario.addAll(enfrentamientos);
+    }
+
     public ArrayList<Enfrentamiento> getCalendario() {
         return new ArrayList<>(calendario);
     }
