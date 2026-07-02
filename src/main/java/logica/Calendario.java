@@ -17,4 +17,14 @@ public class Calendario {
     public ArrayList<Enfrentamiento> getCalendario() {
         return new ArrayList<>(calendario);
     }
+
+    public ArrayList<Enfrentamiento> getProximosEncuentros(){
+        ArrayList<Enfrentamiento> calendarioProx = new ArrayList<>();
+        for(Enfrentamiento enf : calendario){
+            if(!enf.estadoFinalizado()){
+                calendarioProx.add(enf);
+            }
+        }
+        return calendarioProx;
+    }
 }
