@@ -35,4 +35,12 @@ public class Estadistica {
     public int getEmpates() {
         return empates;
     }
+
+    public double getPorcentajeVictorias(){
+        int total = victorias + derrotas + empates;
+        if(total == 0) {
+            return 0;
+        }
+        return (double) victorias / total;
+    }
 }
