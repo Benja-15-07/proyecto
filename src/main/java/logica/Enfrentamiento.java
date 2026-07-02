@@ -12,6 +12,12 @@ public class Enfrentamiento {
         this.resultado = null;
     }
 
+    public void registrarResultado(CriterioStrategy criterio, int puntuacion1, int puntuacion2){
+        this.resultado = new Resultado(puntuacion1, puntuacion2);
+
+        this.ganador = criterio.evaluarResultado(this);
+    }
+
     public Participante getParticipante1() {
         return participante1;
     }
