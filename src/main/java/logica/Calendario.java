@@ -2,16 +2,17 @@ package logica;
 
 import java.util.ArrayList;
 
-public class Calendario {
+public class Calendario implements Observer {
     private ArrayList<Enfrentamiento> calendario;
 
     public Calendario() {
         this.calendario = new ArrayList<>();
     }
 
-    public void actualizar(ArrayList<Enfrentamiento> enfrentamientos){
-        calendario.clear();
-        calendario.addAll(enfrentamientos);
+    @Override
+    public void actualizar(){   //(ArrayList<Enfrentamiento> enfrentamientos){
+        //calendario.clear();
+        //calendario.addAll(enfrentamientos);
     }
 
     public ArrayList<Enfrentamiento> getCalendario() {

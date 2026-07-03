@@ -15,6 +15,7 @@ public class Torneo {
     private Clasificacion clasificacion;
     private Calendario calendario;
 
+    private ArrayList<Observer> observers;
 
     public Torneo(String nombre, String disciplina, LocalDate fechaInicio, LocalDate fechaFin, FormatoStrategy formato, CriterioStrategy criterio) {
         this.nombre = nombre;
@@ -27,6 +28,9 @@ public class Torneo {
         this.enfrentamientos = new ArrayList<>();
         this.clasificacion = new Clasificacion();
         this.calendario = new Calendario();
+
+        this.observers = new ArrayList<>();
+        this.observers.add(this.clasificacion); this.observers.add(this.calendario);
     }
 
     public void addParticipante(Participante participante){
@@ -45,7 +49,8 @@ public class Torneo {
     }
 
     public void actualizar(){
-        this.clasificacion.actualizar(participantes);
-        this.calendario.actualizar(enfrentamientos);
+        for(Observer s : observers){
+            s.actualizar();
+        }
     }
 }
