@@ -11,9 +11,9 @@ public class Clasificacion implements Observer {
     }
 
     @Override
-    public void actualizar(){ //(ArrayList<Participante> participantes){
-        //clasificacion.clear();
-        //clasificacion.addAll(participantes);
+    public void actualizar(ArrayList<Participante> participantes){
+        clasificacion.clear();
+        clasificacion.addAll(participantes);
         clasificacion.sort(Comparator.comparingDouble(
                 (Participante p) -> p.getEstadistica().getPorcentajeVictorias()).reversed());
     }

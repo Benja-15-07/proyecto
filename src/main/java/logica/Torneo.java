@@ -28,11 +28,11 @@ public class Torneo {
         this.participantes = new ArrayList<>();
         this.enfrentamientos = new ArrayList<>();
         this.clasificacion = new Clasificacion();
-        this.calendario = new Calendario();
+        this.calendario = null;
         this.bracket = null;
 
         this.observers = new ArrayList<>();
-        this.observers.add(this.clasificacion); this.observers.add(this.calendario);
+        this.observers.add(this.clasificacion);
     }
 
     public void addParticipante(Participante participante){
@@ -47,12 +47,15 @@ public class Torneo {
 
     public void generarEnfrentamiento(){
         enfrentamientos = formato.generarEnfrentamientos(participantes);
+        calendario = new Calendario(enfrentamientos);
+        bracket = formato.generarBracket(enfrentamientos);
+
         actualizar();
     }
 
     public void actualizar(){
         for(Observer s : observers){
-            s.actualizar();
+            s.actualizar(participantes);
         }
     }
 
