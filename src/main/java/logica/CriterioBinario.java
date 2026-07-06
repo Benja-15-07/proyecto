@@ -4,9 +4,17 @@ package logica;
 public class CriterioBinario implements CriterioStrategy{
     @Override
     public Participante evaluarResultado(Enfrentamiento enfrentamiento) {
-        if(enfrentamiento.getResultado().getPuntuacion1() == 1){
+        int puntuacion1 = enfrentamiento.getResultado().getPuntuacion1();
+        int puntuacion2 = enfrentamiento.getResultado().getPuntuacion2();
+
+        if(puntuacion1 == 1 && puntuacion2 == 0){
             return enfrentamiento.getParticipante1();
-        } else return enfrentamiento.getParticipante2();
+        } else if (puntuacion1 == 0 && puntuacion2 == 1) {
+            return enfrentamiento.getParticipante2();
+        }
+        else {
+            throw new IllegalArgumentException("Resulatado binario inválido.");
+        }
     }
 
     @Override
