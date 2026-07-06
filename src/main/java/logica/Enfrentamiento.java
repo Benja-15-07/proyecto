@@ -13,9 +13,25 @@ public class Enfrentamiento {
     }
 
     public void registrarResultado(CriterioStrategy criterio, int puntuacion1, int puntuacion2){
+        if(resultado != null){
+            throw new IllegalStateException("El enfrentamiento ya tiene un resultado registrado.");
+        }
+
         this.resultado = new Resultado(puntuacion1, puntuacion2);
 
         this.ganador = criterio.evaluarResultado(this);
+
+        if(ganador == participante1){
+            participante1.getEstadistica().agregarVictoria();
+            participante2.getEstadistica().agregarDerrota();
+        } else if (ganador == participante2) {
+            participante2.getEstadistica().agregarVictoria();
+            participante1.getEstadistica().agregarDerrota();
+        }
+        else {
+            participante1.getEstadistica().agregarEmpate();
+            participante2.getEstadistica().agregarEmpate();
+        }
     }
 
     public boolean estadoFinalizado(){
