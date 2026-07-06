@@ -36,6 +36,10 @@ public class Estadistica {
         return empates;
     }
 
+    public int getPartidasJugadas(){
+        return victorias + derrotas + empates;
+    }
+
     public double getPorcentajeVictorias(){
         int total = victorias + derrotas + empates;
         if(total == 0) {

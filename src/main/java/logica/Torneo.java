@@ -66,4 +66,40 @@ public class Torneo {
     public ArrayList<Enfrentamiento> getEnfrentamientos() {
         return new ArrayList<>(enfrentamientos);
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDisciplina() {
+        return disciplina;
+    }
+
+    public LocalDate getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public LocalDate getFechaFin() {
+        return fechaFin;
+    }
+
+    public String getNombreFormato() {
+        return formato.getNombreFormato();
+    }
+
+    public String getNombreCriterio() {
+        return criterio.getNombreCriterio();
+    }
+
+    public Clasificacion getClasificacion() {
+        return clasificacion;
+    }
+
+    public Calendario getCalendario() {
+        return calendario;
+    }
+
+    public Bracket getBracket() {
+        return bracket;
+    }
 }
