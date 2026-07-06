@@ -61,8 +61,7 @@ public class PanelOrganizador extends JPanel {
         JLabel lblFormato = new JLabel("Formato:");
         cbFormato = new JComboBox<>(new String[]{
                 "Liga",
-                "Eliminación directa",
-                "Eliminación doble"
+                "Eliminación directa"
         });
 
         JLabel lblFechaInicio = new JLabel("Fecha inicio:");
