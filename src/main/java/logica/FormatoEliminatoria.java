@@ -8,6 +8,11 @@ import java.util.ArrayList;
 public class FormatoEliminatoria implements FormatoStrategy{
     @Override
     public ArrayList<Enfrentamiento> generarEnfrentamientos(ArrayList<Participante> participantes) {
+        int n = participantes.size();
+        if(n < 2 || (n & (n - 1)) != 0){
+            throw new IllegalArgumentException("El formato eliminatoria requiere una cantidad de participantes que sea potencia de 2.");
+        }
+
         ArrayList<Enfrentamiento> enfrentamientos = new ArrayList<>();
         for(int i = 0; i < participantes.size()/2; i++) {
             enfrentamientos.add(new Enfrentamiento(participantes.get(i*2), participantes.get((i*2)+1)));

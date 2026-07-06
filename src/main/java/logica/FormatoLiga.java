@@ -6,6 +6,11 @@ import java.util.ArrayList;
 public class FormatoLiga implements FormatoStrategy {
     @Override
     public ArrayList<Enfrentamiento> generarEnfrentamientos(ArrayList<Participante> participantes) {
+        int n = participantes.size();
+        if(n < 2){
+            throw new IllegalArgumentException("El formato liga reguiere al menos 2 participantes.");
+        }
+
         ArrayList<Enfrentamiento> enfrentamientos = new ArrayList<>();
         for(int i = 0; i < participantes.size() - 1; i++){
             for(int j = i+1; j < participantes.size(); j++){
