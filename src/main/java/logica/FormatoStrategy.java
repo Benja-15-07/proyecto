@@ -8,4 +8,8 @@ import java.util.ArrayList;
  * o se escojen enfrentamientos en parejas, respectivamente.*/
 public interface FormatoStrategy {
     public ArrayList<Enfrentamiento> generarEnfrentamientos(ArrayList<Participante> participantes);
+
+    public Bracket generarBracket(ArrayList<Enfrentamiento> enfrentamientos);
+
+    public String getNombreFormato();
 }

@@ -14,4 +14,14 @@ public class FormatoEliminatoria implements FormatoStrategy{
         }
         return enfrentamientos;
     }
+
+    @Override
+    public Bracket generarBracket(ArrayList<Enfrentamiento> enfrentamientos) {
+        return new Bracket(enfrentamientos);
+    }
+
+    @Override
+    public String getNombreFormato() {
+        return "Eliminatoria";
+    }
 }

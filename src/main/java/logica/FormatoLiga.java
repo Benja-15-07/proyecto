@@ -14,4 +14,14 @@ public class FormatoLiga implements FormatoStrategy {
         }
         return enfrentamientos;
     }
+
+    @Override
+    public Bracket generarBracket(ArrayList<Enfrentamiento> enfrentamientos) {
+        return null;
+    }
+
+    @Override
+    public String getNombreFormato() {
+        return "Liga";
+    }
 }
