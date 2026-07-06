@@ -12,4 +12,9 @@ public class CriterioMayorPuntaje implements CriterioStrategy{
         }
         else return null; // Empate
     }
+
+    @Override
+    public String getNombreCriterio() {
+        return "Mayor puntaje";
+    }
 }

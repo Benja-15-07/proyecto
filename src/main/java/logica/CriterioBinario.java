@@ -8,4 +8,9 @@ public class CriterioBinario implements CriterioStrategy{
             return enfrentamiento.getParticipante1();
         } else return enfrentamiento.getParticipante2();
     }
+
+    @Override
+    public String getNombreCriterio() {
+        return "Binario";
+    }
 }

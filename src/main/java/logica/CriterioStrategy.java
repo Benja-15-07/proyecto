@@ -7,4 +7,6 @@ package logica;
  * bajo "menor tiempo")*/
 public interface CriterioStrategy {
     public Participante evaluarResultado(Enfrentamiento enfrentamiento);
+
+    public String getNombreCriterio();
 }

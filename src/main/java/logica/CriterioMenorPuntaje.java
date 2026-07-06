@@ -12,4 +12,9 @@ public class CriterioMenorPuntaje implements CriterioStrategy{
         }
         else return null; // Empate
     }
+
+    @Override
+    public String getNombreCriterio() {
+        return "Menor puntaje";
+    }
 }
