@@ -72,6 +72,30 @@ public class ControladorTorneo {
             actualizarClasificacion();
             actualizarListaParticipantes();
         });
+
+        panelOrganizador.agregarListenerGenerarEnfrentamientos(e -> {
+            Torneo torneo = organizador.getTorneo();
+            if (torneo == null){
+                JOptionPane.showMessageDialog(ventana,"Primero debe crear un torneo.");
+                return;
+            }
+
+            if(torneo.getParticipantes().size() < 2){
+                JOptionPane.showMessageDialog(ventana,"Debe haber al menos 2 participantes.");
+                return;
+            }
+
+            try {
+                generarEnfrentamientos();
+
+                actualizarEstadoTorneo();
+                actualizarCalendario();
+                actualizarClasificacion();
+                actualizarEnfrentamientos();
+            } catch (IllegalArgumentException exp ) {
+                JOptionPane.showMessageDialog(ventana,exp.getMessage());
+            }
+        });
     }
 
     private void crearTorneo(String nombre,
@@ -85,6 +109,10 @@ public class ControladorTorneo {
 
     private void addParticipante(Participante participante){
         organizador.addParticipante(participante);
+    }
+
+    private void generarEnfrentamientos(){
+        organizador.generarEnfrentamientos();
     }
 
     private FormatoStrategy seleccionaFormato(String formatotxt){
@@ -169,6 +197,46 @@ public class ControladorTorneo {
         }
 
         panelOrganizador.mostrarParticipantes(participantesTxt);
+    }
+
+    private void actualizarCalendario(){
+        PanelCalendario panelCalendario = ventana.getPanelPrincipal().getPanelTorneo().getPanelCalendario();
+        Calendario calendario = organizador.getTorneo().getCalendario();
+
+        if(calendario == null){
+            return;
+        }
+
+        Map<LocalDate, List<String>> encuentros = new HashMap<>();
+
+        for (Enfrentamiento enf : calendario.getCalendario()){
+            LocalDate fecha = enf.getFecha();
+
+            String enfrentamientoTxt = enf.getParticipante1().getNombre() + " vs " + enf.getParticipante2().getNombre();
+
+            encuentros.computeIfAbsent(fecha, f-> new ArrayList<>()).add(enfrentamientoTxt);
+        }
+
+        panelCalendario.actualizarEncuentros(encuentros);
+    }
+
+    private void actualizarEnfrentamientos(){
+        PanelEnfrentamiento panelEnfrentamiento = ventana.getPanelPrincipal().getPanelTorneo().getPanelEnfrentamiento();
+
+        enfrentamientosMap.clear();
+
+        List<Enfrentamiento> enfrentamientos = organizador.getTorneo().getEnfrentamientos();
+        List<String> enfrentamientosTxt = new ArrayList<>();
+
+        for (Enfrentamiento enf : enfrentamientos){
+            if(!enf.estadoFinalizado()){
+                String texto = enf.getParticipante1().getNombre() + " vs " + enf.getParticipante2().getNombre();
+
+                enfrentamientosTxt.add(texto);
+                enfrentamientosMap.put(texto, enf);
+            }
+        }
+        panelEnfrentamiento.actualizarEncuentros(enfrentamientosTxt);
     }
 
     private void actualizarClasificacion(){
