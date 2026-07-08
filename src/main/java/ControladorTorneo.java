@@ -3,6 +3,7 @@ import visual.*;
 
 import javax.swing.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,9 +45,34 @@ public class ControladorTorneo {
             crearTorneo(nombre, disciplina, fechaInicio, formato, criterio);
             actualizarEstadoTorneo();
         });
+
+        panelOrganizador.agregarListenerParticipante(e -> {
+            if (organizador.getTorneo() == null){
+                JOptionPane.showMessageDialog(ventana,"Primero debe crear un torneo.");
+                return;
+            }
+
+            Participante participante = generarParticipante(panelOrganizador);
+            if(participante == null){
+                return;
+            }
+
+            for(Participante par : organizador.getTorneo().getParticipantes()){
+                if(par.getNombre().equalsIgnoreCase(participante.getNombre())){
+                    JOptionPane.showMessageDialog(ventana,"Ya existe un participante con ese nombre.");
+                    return;
+                }
+            }
+
+            addParticipante(participante);
+
+            panelOrganizador.limpiarNombreParticipante();
+
+            actualizarEstadoTorneo();
+            actualizarClasificacion();
+            actualizarListaParticipantes();
+        });
     }
-
-
 
     private void crearTorneo(String nombre,
                              String disciplina,
@@ -55,6 +81,10 @@ public class ControladorTorneo {
                              CriterioStrategy criterio){
 
         organizador.crearTorneo(nombre, disciplina, fechaInicio, formato, criterio);
+    }
+
+    private void addParticipante(Participante participante){
+        organizador.addParticipante(participante);
     }
 
     private FormatoStrategy seleccionaFormato(String formatotxt){
@@ -78,6 +108,23 @@ public class ControladorTorneo {
         }
     }
 
+    private Participante generarParticipante(PanelOrganizador panelOrganizador){
+        String nombre = panelOrganizador.getNombreParticipante();
+        String contacto = panelOrganizador.getContactoParticipante();
+        String tipo = panelOrganizador.getTipoParticipante();
+
+        if (nombre.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(ventana,"Ingrese un nombre.");
+            return null;
+        }
+
+        if(tipo.equals("Individuo")){
+            return new Individuo(nombre,contacto);
+        }
+        else {
+            return new Equipo(nombre,contacto);
+        }
+    }
 
     private void actualizarEstadoTorneo(){
         PanelEstadoTorneo panelEstadoTorneo = ventana.getPanelPrincipal().getPanelTorneo().getPanelEstadoTorneo();
@@ -110,5 +157,32 @@ public class ControladorTorneo {
             }
         }
         return "Finalizado";
+    }
+
+    private void actualizarListaParticipantes(){
+        PanelOrganizador panelOrganizador = ventana.getPanelPrincipal().getPanelTorneo().getPanelOrganizador();
+        List<Participante> participantes = organizador.getTorneo().getParticipantes();
+        List<String> participantesTxt = new ArrayList<>();
+
+        for(Participante par : participantes){
+            participantesTxt.add(par.getNombre());
+        }
+
+        panelOrganizador.mostrarParticipantes(participantesTxt);
+    }
+
+    private void actualizarClasificacion(){
+        PanelClasificacion panelClasificacion = ventana.getPanelPrincipal().getPanelTorneo().getPanelClasificacion();
+
+        Clasificacion clasificacion = organizador.getTorneo().getClasificacion();
+        List<Object[]> filas = new ArrayList<>();
+
+        int posicion = 1;
+        for(Participante p : clasificacion.getClasificacion()){
+            Estadistica e = p.getEstadistica();
+
+            filas.add(new Object[]{posicion++, p.getNombre(), e.getPuntos(), e.getPartidasJugadas()});
+        }
+        panelClasificacion.actualizarClasificacion(filas);
     }
 }
