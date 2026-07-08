@@ -64,6 +64,27 @@ public class Torneo {
         actualizar();
     }
 
+    public void generarSiguienteRonda(List<Participante> ganadores){
+        if(!(formato instanceof FormatoEliminatoria) || ganadores.size() <= 1) {
+            return;
+        }
+
+        rondaActual++;
+
+        List<Enfrentamiento> nuevaRonda = formato.generarEnfrentamientos(ganadores);
+
+        for(Enfrentamiento enf : nuevaRonda){
+            enf.setRonda(rondaActual);
+        }
+
+        enfrentamientos.addAll(nuevaRonda);
+
+        calendario = new Calendario(enfrentamientos, fechaInicio);
+        bracket = formato.generarBracket(enfrentamientos);
+
+        actualizar();
+    }
+
     public void actualizar(){
         for(Observer s : observers){
             s.actualizar(participantes);
