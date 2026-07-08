@@ -111,6 +111,49 @@ public class ControladorTorneo {
 
             panelEnfrentamiento.mostrarEnfrentamiento(seleccionado, participante1, participante2);
         });
+
+        panelEnfrentamiento.agregarListenerRegistrar(e -> {
+            String seleccionado = panelEnfrentamiento.getEncuentroSeleccionado();
+
+            if(seleccionado == null){
+                JOptionPane.showMessageDialog(ventana,"Seleccione un enfrentamiento.");
+                return;
+            }
+
+            Enfrentamiento enfrentamiento = enfrentamientosMap.get(seleccionado);
+
+            try {
+                int puntaje1 = Integer.parseInt(panelEnfrentamiento.getResultadoParticipante1());
+                int puntaje2 = Integer.parseInt(panelEnfrentamiento.getResultadoParticipante2());
+
+                if(puntaje1 < 0 || puntaje2 < 0){
+                    JOptionPane.showMessageDialog(ventana, "Los puntajes no pueden ser negativos");
+                    return;
+                }
+
+                if(organizador.getTorneo().getNombreCriterio().equals("Binario") && puntaje1 == puntaje2){
+                    JOptionPane.showMessageDialog(ventana, "En el criterio binario no puede haber empate.");
+                    return;
+                }
+
+                organizador.registrarResultado(enfrentamiento, puntaje1, puntaje2);
+
+                if(organizador.getTorneo().getNombreFormato().equals("Eliminatoria")){
+                    generarSiguienteRonda();
+                }
+
+                actualizarEstadoTorneo();
+                actualizarCalendario();
+                actualizarClasificacion();
+                actualizarEnfrentamientos();
+
+                panelEnfrentamiento.limpiarEnfrentamiento();
+            }catch (NumberFormatException ex){
+                JOptionPane.showMessageDialog(ventana,"Los puntajes deben ser números enteros.");
+            } catch (IllegalStateException ex) {
+                JOptionPane.showMessageDialog(ventana, ex.getMessage());
+            }
+        });
     }
 
     private void crearTorneo(String nombre,
@@ -267,5 +310,35 @@ public class ControladorTorneo {
             filas.add(new Object[]{posicion++, p.getNombre(), e.getPuntos(), e.getPartidasJugadas()});
         }
         panelClasificacion.actualizarClasificacion(filas);
+    }
+
+    private void generarSiguienteRonda() {
+        Torneo torneo = organizador.getTorneo();
+
+        List<Enfrentamiento> ronda = new ArrayList<>();
+
+        for(Enfrentamiento enf : torneo.getEnfrentamientos()){
+            if(enf.getRonda() == torneo.getRondaActual()){
+                ronda.add(enf);
+            }
+        }
+
+        for(Enfrentamiento enf : ronda){
+            if(!enf.estadoFinalizado()){
+                return;
+            }
+        }
+
+        if(ronda.size() == 1){
+            return;
+        }
+
+        ArrayList<Participante> ganadores = new ArrayList<>();
+
+        for(Enfrentamiento enf : ronda){
+            ganadores.add(enf.getGanador());
+        }
+
+        torneo.generarSiguienteRonda(ganadores);
     }
 }
