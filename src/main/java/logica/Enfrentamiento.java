@@ -8,7 +8,6 @@ public class Enfrentamiento {
     private LocalDate fecha;
     private Resultado    resultado;
     private Participante ganador;
-    private LocalDate fecha;
     private int ronda;
 
     public Enfrentamiento(Participante participante1, Participante participante2) {
@@ -16,7 +15,6 @@ public class Enfrentamiento {
         this.participante2 = participante2;
         this.fecha = null;
         this.resultado = null;
-        this.fecha = null;
         this.ronda = 0;
     }
 
@@ -70,16 +68,8 @@ public class Enfrentamiento {
         return ganador;
     }
 
-    public LocalDate getFecha() {
-        return fecha;
-    }
-
     public int getRonda() {
         return ronda;
-    }
-
-    public void setFecha(LocalDate fecha){
-        this.fecha = fecha;
     }
 
     public void setRonda(int ronda) {

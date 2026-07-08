@@ -9,6 +9,10 @@ import java.util.List;
 public class Calendario {
     private List<Enfrentamiento> calendario;
 
+    public Calendario(List<Enfrentamiento> enfrentamientos) {
+        this.calendario = new ArrayList<>(enfrentamientos);
+    }
+
     public Calendario(List<Enfrentamiento> enfrentamientos, LocalDate fecha) {
         this.calendario = new ArrayList<>(enfrentamientos);
         for(Enfrentamiento enf : calendario){

@@ -378,6 +378,15 @@ public class PanelOrganizador extends JPanel {
     }
 
     /**
+     * Nombre alternativo para que el controlador lea el mismo criterio.
+     *
+     * @return criterio seleccionado en la lista
+     */
+    public String getCriterioSeleccionado() {
+        return getCriterioGanador();
+    }
+
+    /**
      * Lee la fecha inicial seleccionada en el calendario.
      *
      * @return fecha de inicio o {@code null} si no se ha elegido
