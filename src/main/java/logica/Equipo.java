@@ -1,9 +1,10 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Equipo extends Participante {
-    private ArrayList<Individuo> integrantes;
+    private List<Individuo> integrantes;
 
     public Equipo(String nombre, String contacto) {
         super(nombre, contacto);

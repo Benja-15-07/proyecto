@@ -8,12 +8,16 @@ public class Enfrentamiento {
     private LocalDate fecha;
     private Resultado    resultado;
     private Participante ganador;
+    private LocalDate fecha;
+    private int ronda;
 
     public Enfrentamiento(Participante participante1, Participante participante2) {
         this.participante1 = participante1;
         this.participante2 = participante2;
         this.fecha = null;
         this.resultado = null;
+        this.fecha = null;
+        this.ronda = 0;
     }
 
     public void registrarResultado(CriterioStrategy criterio, int puntuacion1, int puntuacion2){
@@ -64,5 +68,21 @@ public class Enfrentamiento {
 
     public Participante getGanador() {
         return ganador;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public int getRonda() {
+        return ronda;
+    }
+
+    public void setFecha(LocalDate fecha){
+        this.fecha = fecha;
+    }
+
+    public void setRonda(int ronda) {
+        this.ronda = ronda;
     }
 }
