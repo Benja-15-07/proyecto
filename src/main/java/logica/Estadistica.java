@@ -47,4 +47,8 @@ public class Estadistica {
         }
         return (double) victorias / total;
     }
+
+    public int getPuntos(){
+        return 3 * victorias + empates;
+    }
 }
