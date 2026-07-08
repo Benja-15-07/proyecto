@@ -1,7 +1,7 @@
 package logica;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface Observer {
-    public void actualizar(ArrayList<Participante> participantes);
+    public void actualizar(List<Participante> participantes);
 }

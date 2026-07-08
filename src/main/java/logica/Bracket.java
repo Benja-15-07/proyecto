@@ -1,15 +1,16 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Bracket {
-    private ArrayList<Enfrentamiento> bracket;
+    private List<Enfrentamiento> bracket;
 
-    public Bracket(ArrayList<Enfrentamiento> enfrentamientos){
+    public Bracket(List<Enfrentamiento> enfrentamientos){
         this.bracket = new ArrayList<>(enfrentamientos);
     }
 
-    public ArrayList<Enfrentamiento> getBracket(){
+    public List<Enfrentamiento> getBracket(){
         return new ArrayList<>(bracket);
     }
 }

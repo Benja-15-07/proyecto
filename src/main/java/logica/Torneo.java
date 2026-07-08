@@ -19,7 +19,7 @@ public class Torneo {
     private Calendario calendario;
     private Bracket bracket;
 
-    private ArrayList<Observer> observers;
+    private List<Observer> observers;
 
     public Torneo(String nombre, String disciplina, LocalDate fechaInicio, FormatoStrategy formato, CriterioStrategy criterio) {
         this.nombre = nombre;
@@ -91,11 +91,11 @@ public class Torneo {
         }
     }
 
-    public ArrayList<Participante> getParticipantes() {
+    public List<Participante> getParticipantes() {
         return new ArrayList<>(participantes);
     }
 
-    public ArrayList<Enfrentamiento> getEnfrentamientos() {
+    public List<Enfrentamiento> getEnfrentamientos() {
         return new ArrayList<>(enfrentamientos);
     }
 
