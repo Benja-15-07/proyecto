@@ -1,5 +1,6 @@
 package logica;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /** FormatoLiga genera enfrentamientos para cada posible combinación entre participantes (sin repeticiones)*/
@@ -23,6 +24,12 @@ public class FormatoLiga implements FormatoStrategy {
     @Override
     public Bracket generarBracket(ArrayList<Enfrentamiento> enfrentamientos) {
         return null;
+    }
+
+    @Override
+    public LocalDate calcularFechaFin(LocalDate fechaInicio, int participantes) {
+        int enfrentamientos = participantes * (participantes - 1) / 2;
+        return fechaInicio.plusDays(enfrentamientos - 1);
     }
 
     @Override

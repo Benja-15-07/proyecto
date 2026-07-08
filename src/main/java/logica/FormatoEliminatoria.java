@@ -1,5 +1,6 @@
 package logica;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /** FormatoEliminatoria empareja de dos en dos a los participantes.
@@ -23,6 +24,12 @@ public class FormatoEliminatoria implements FormatoStrategy{
     @Override
     public Bracket generarBracket(ArrayList<Enfrentamiento> enfrentamientos) {
         return new Bracket(enfrentamientos);
+    }
+
+    @Override
+    public LocalDate calcularFechaFin(LocalDate fechaInicio, int participantes) {
+        int enfrentamientos = participantes - 1;
+        return fechaInicio.plusDays(enfrentamientos - 1);
     }
 
     @Override

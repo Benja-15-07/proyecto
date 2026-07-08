@@ -1,5 +1,6 @@
 package logica;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /** Patrón de diseño Strategy para la elección del formato del torneo
@@ -10,6 +11,8 @@ public interface FormatoStrategy {
     public ArrayList<Enfrentamiento> generarEnfrentamientos(ArrayList<Participante> participantes);
 
     public Bracket generarBracket(ArrayList<Enfrentamiento> enfrentamientos);
+
+    public LocalDate calcularFechaFin(LocalDate fechaInicio, int participantes);
 
     public String getNombreFormato();
 }
