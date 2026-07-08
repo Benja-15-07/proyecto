@@ -92,9 +92,24 @@ public class ControladorTorneo {
                 actualizarCalendario();
                 actualizarClasificacion();
                 actualizarEnfrentamientos();
-            } catch (IllegalArgumentException exp ) {
+            } catch (IllegalArgumentException exp   ) {
                 JOptionPane.showMessageDialog(ventana,exp.getMessage());
             }
+        });
+
+        panelEnfrentamiento.agregarListenerSeleccionEncuentro(e -> {
+            String seleccionado = panelEnfrentamiento.getEncuentroSeleccionado();
+
+            if(seleccionado == null){
+                panelEnfrentamiento.limpiarEnfrentamiento();
+                return;
+            }
+
+            Enfrentamiento enfrentamiento = enfrentamientosMap.get(seleccionado);
+            String participante1 = enfrentamiento.getParticipante1().getNombre();
+            String participante2 = enfrentamiento.getParticipante2().getNombre();
+
+            panelEnfrentamiento.mostrarEnfrentamiento(seleccionado, participante1, participante2);
         });
     }
 
