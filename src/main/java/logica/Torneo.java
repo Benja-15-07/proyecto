@@ -83,6 +83,27 @@ public class Torneo {
         return fechaFin;
     }
 
+    public void setFechaInicio(LocalDate fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public void setFechaFin(LocalDate fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+    public void asignarFechaEnfrentamiento(Enfrentamiento enfrentamiento, LocalDate fecha) {
+        if (fecha != null && fechaInicio != null && fecha.isBefore(fechaInicio)) {
+            throw new IllegalArgumentException("La fecha del enfrentamiento no puede ser anterior al inicio del torneo.");
+        }
+        if (fecha != null && fechaFin != null && fecha.isAfter(fechaFin)) {
+            throw new IllegalArgumentException("La fecha del enfrentamiento no puede ser posterior al fin del torneo.");
+        }
+        if (calendario == null) {
+            calendario = new Calendario(enfrentamientos);
+        }
+        calendario.asignarFecha(enfrentamiento, fecha);
+    }
+
     public String getNombreFormato() {
         return formato.getNombreFormato();
     }

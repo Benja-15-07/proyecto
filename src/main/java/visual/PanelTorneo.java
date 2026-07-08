@@ -12,6 +12,7 @@ public class PanelTorneo extends JPanel {
     private PanelOrganizador panelOrganizador;
     private PanelClasificacion panelClasificacion;
     private PanelCalendario panelCalendario;
+    private PanelBracket panelBracket;
     private PanelEnfrentamiento panelEnfrentamiento;
 
     /**
@@ -25,6 +26,7 @@ public class PanelTorneo extends JPanel {
         panelEstadoTorneo = new PanelEstadoTorneo();
         panelClasificacion = new PanelClasificacion();
         panelCalendario = new PanelCalendario();
+        panelBracket = new PanelBracket();
         panelEnfrentamiento = new PanelEnfrentamiento();
         panelOrganizador = new PanelOrganizador();
 
@@ -39,6 +41,7 @@ public class PanelTorneo extends JPanel {
         panelCentro.setBorder(BorderFactory.createEmptyBorder());
         panelCentro.addTab("Calendario mensual", panelCalendario);
         panelCentro.addTab("Clasificación", panelClasificacion);
+        panelCentro.addTab("Bracket", panelBracket);
 
         JPanel contenido = new JPanel(new BorderLayout(14, 14));
         contenido.setOpaque(false);
@@ -85,6 +88,15 @@ public class PanelTorneo extends JPanel {
      */
     public PanelCalendario getPanelCalendario() {
         return panelCalendario;
+    }
+
+    /**
+     * Da acceso al cuadro de eliminacion directa.
+     *
+     * @return panel usado para mostrar el bracket
+     */
+    public PanelBracket getPanelBracket() {
+        return panelBracket;
     }
 
     /**

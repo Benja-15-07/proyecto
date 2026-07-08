@@ -10,6 +10,7 @@ public class PanelEstadoTorneo extends JPanel {
     private JTextArea txtNombre;
     private JTextArea txtDisciplina;
     private JTextArea txtFormato;
+    private JTextArea txtCriterio;
     private JTextArea txtParticipantes;
     private JTextArea txtEstado;
 
@@ -20,12 +21,13 @@ public class PanelEstadoTorneo extends JPanel {
         this.setLayout(new BorderLayout());
         this.setOpaque(false);
 
-        JPanel contenido = new JPanel(new GridLayout(1, 5, 12, 0));
+        JPanel contenido = new JPanel(new GridLayout(1, 6, 12, 0));
         contenido.setOpaque(false);
 
         txtNombre = crearValor("Sin crear");
         txtDisciplina = crearValor("Sin definir");
         txtFormato = crearValor("Sin definir");
+        txtCriterio = crearValor("Sin definir");
         txtParticipantes = crearValor("0");
         txtEstado = crearValor("Pendiente");
 
@@ -35,6 +37,8 @@ public class PanelEstadoTorneo extends JPanel {
                 "Disciplina", txtDisciplina, EstilosVisuales.SECUNDARIO, new Color(236, 253, 245)));
         contenido.add(crearTarjeta(
                 "Formato", txtFormato, EstilosVisuales.ESMERALDA, new Color(209, 250, 229)));
+        contenido.add(crearTarjeta(
+                "Criterio", txtCriterio, EstilosVisuales.OLIVA, new Color(247, 254, 231)));
         contenido.add(crearTarjeta(
                 "Participantes", txtParticipantes, EstilosVisuales.VERDE_CLARO,
                 new Color(220, 252, 231)));
@@ -98,9 +102,29 @@ public class PanelEstadoTorneo extends JPanel {
                                 String formato,
                                 int participantes,
                                 String estado) {
+        actualizarDatos(nombre, disciplina, formato, "Sin definir", participantes, estado);
+    }
+
+    /**
+     * Actualiza todos los datos visibles del resumen, incluyendo el criterio.
+     *
+     * @param nombre nombre del torneo
+     * @param disciplina disciplina seleccionada
+     * @param formato formato del torneo
+     * @param criterio criterio usado para elegir ganadores
+     * @param participantes cantidad de participantes
+     * @param estado estado actual
+     */
+    public void actualizarDatos(String nombre,
+                                String disciplina,
+                                String formato,
+                                String criterio,
+                                int participantes,
+                                String estado) {
         actualizarValor(txtNombre, nombre);
         actualizarValor(txtDisciplina, disciplina);
         actualizarValor(txtFormato, formato);
+        actualizarValor(txtCriterio, criterio);
         actualizarValor(txtParticipantes, String.valueOf(participantes));
         actualizarValor(txtEstado, estado);
     }

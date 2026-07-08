@@ -18,12 +18,16 @@ public class PanelOrganizador extends JPanel {
     private JTextField txtNombre;
     private JComboBox<String> cbDisciplina;
     private JComboBox<String> cbFormato;
+    private JComboBox<String> cbCriterioGanador;
     private JTextField txtFechaInicio;
     private JTextField txtFechaFin;
     private JButton btnCrear;
 
     private JTextField txtParticipante;
+    private JComboBox<String> cbTipoParticipante;
+    private JTextField txtContactoParticipante;
     private JButton btnAgregarParticipante;
+    private JButton btnGenerarEnfrentamientos;
     private DefaultListModel<String> modeloParticipantes;
 
     /**
@@ -64,6 +68,13 @@ public class PanelOrganizador extends JPanel {
                 "Eliminación directa"
         });
 
+        JLabel lblCriterioGanador = new JLabel("Criterio ganador:");
+        cbCriterioGanador = new JComboBox<>(new String[]{
+                "Mayor puntaje",
+                "Menor puntaje",
+                "Binario"
+        });
+
         JLabel lblFechaInicio = new JLabel("Fecha inicio:");
         txtFechaInicio = new JTextField();
         JButton btnFechaInicio = new JButton("Elegir");
@@ -76,7 +87,15 @@ public class PanelOrganizador extends JPanel {
 
         JLabel lblParticipante = new JLabel("Participante / Equipo:");
         txtParticipante = new JTextField();
+        JLabel lblTipoParticipante = new JLabel("Tipo participante:");
+        cbTipoParticipante = new JComboBox<>(new String[]{
+                "Individuo",
+                "Equipo"
+        });
+        JLabel lblContactoParticipante = new JLabel("Contacto:");
+        txtContactoParticipante = new JTextField();
         btnAgregarParticipante = new JButton("Agregar participante");
+        btnGenerarEnfrentamientos = new JButton("Generar enfrentamientos");
         JLabel seccionTorneo = EstilosVisuales.crearEtiquetaSeccion(
                 "Datos del torneo", EstilosVisuales.PRIMARIO);
         JLabel seccionParticipantes = EstilosVisuales.crearEtiquetaSeccion(
@@ -85,31 +104,34 @@ public class PanelOrganizador extends JPanel {
         EstilosVisuales.prepararEtiqueta(lblNombre);
         EstilosVisuales.prepararEtiqueta(lblDisciplina);
         EstilosVisuales.prepararEtiqueta(lblFormato);
+        EstilosVisuales.prepararEtiqueta(lblCriterioGanador);
         EstilosVisuales.prepararEtiqueta(lblFechaInicio);
         EstilosVisuales.prepararEtiqueta(lblFechaFin);
         EstilosVisuales.prepararEtiqueta(lblParticipante);
+        EstilosVisuales.prepararEtiqueta(lblTipoParticipante);
+        EstilosVisuales.prepararEtiqueta(lblContactoParticipante);
         EstilosVisuales.prepararCampo(txtNombre);
         EstilosVisuales.prepararCampo(txtFechaInicio);
         EstilosVisuales.prepararCampo(txtFechaFin);
         EstilosVisuales.prepararCampo(txtParticipante);
+        EstilosVisuales.prepararCampo(txtContactoParticipante);
         txtFechaInicio.setEditable(false);
         txtFechaFin.setEditable(false);
         txtFechaInicio.setToolTipText("Selecciona la fecha desde el calendario");
         txtFechaFin.setToolTipText("Selecciona la fecha desde el calendario");
         EstilosVisuales.prepararBotonPrincipal(btnCrear);
         EstilosVisuales.prepararBoton(btnAgregarParticipante, EstilosVisuales.SECUNDARIO);
+        EstilosVisuales.prepararBoton(btnGenerarEnfrentamientos, EstilosVisuales.OLIVA);
         EstilosVisuales.prepararBoton(btnFechaInicio, EstilosVisuales.ESMERALDA);
         EstilosVisuales.prepararBoton(btnFechaFin, EstilosVisuales.ESMERALDA);
 
         JPanel campoFechaInicio = crearCampoFecha(txtFechaInicio, btnFechaInicio);
         JPanel campoFechaFin = crearCampoFecha(txtFechaFin, btnFechaFin);
 
-        cbFormato.setFont(EstilosVisuales.FUENTE_NORMAL);
-        cbFormato.setForeground(EstilosVisuales.TEXTO);
-        cbFormato.setBackground(EstilosVisuales.SUPERFICIE);
-        cbDisciplina.setFont(EstilosVisuales.FUENTE_NORMAL);
-        cbDisciplina.setForeground(EstilosVisuales.TEXTO);
-        cbDisciplina.setBackground(EstilosVisuales.SUPERFICIE);
+        prepararCombo(cbFormato);
+        prepararCombo(cbDisciplina);
+        prepararCombo(cbCriterioGanador);
+        prepararCombo(cbTipoParticipante);
 
         modeloParticipantes = new DefaultListModel<>();
         JList<String> listaParticipantes = new JList<>(modeloParticipantes);
@@ -155,42 +177,68 @@ public class PanelOrganizador extends JPanel {
 
         gbc.gridy = 7;
         gbc.weightx = 0;
-        formulario.add(lblFechaInicio, gbc);
+        formulario.add(lblCriterioGanador, gbc);
 
         gbc.gridy = 8;
         gbc.weightx = 1;
-        formulario.add(campoFechaInicio, gbc);
+        formulario.add(cbCriterioGanador, gbc);
 
         gbc.gridy = 9;
         gbc.weightx = 0;
-        formulario.add(lblFechaFin, gbc);
+        formulario.add(lblFechaInicio, gbc);
 
         gbc.gridy = 10;
         gbc.weightx = 1;
-        formulario.add(campoFechaFin, gbc);
+        formulario.add(campoFechaInicio, gbc);
 
         gbc.gridy = 11;
+        gbc.weightx = 0;
+        formulario.add(lblFechaFin, gbc);
+
+        gbc.gridy = 12;
+        gbc.weightx = 1;
+        formulario.add(campoFechaFin, gbc);
+
+        gbc.gridy = 13;
         gbc.insets = new Insets(12, 6, 6, 6);
         formulario.add(btnCrear, gbc);
 
-        gbc.gridy = 12;
+        gbc.gridy = 14;
         gbc.insets = new Insets(18, 6, 10, 6);
         formulario.add(seccionParticipantes, gbc);
 
-        gbc.gridy = 13;
+        gbc.gridy = 15;
         gbc.insets = new Insets(6, 6, 6, 6);
         formulario.add(lblParticipante, gbc);
 
-        gbc.gridy = 14;
+        gbc.gridy = 16;
         formulario.add(txtParticipante, gbc);
 
-        gbc.gridy = 15;
+        gbc.gridy = 17;
+        formulario.add(lblTipoParticipante, gbc);
+
+        gbc.gridy = 18;
+        formulario.add(cbTipoParticipante, gbc);
+
+        gbc.gridy = 19;
+        formulario.add(lblContactoParticipante, gbc);
+
+        gbc.gridy = 20;
+        formulario.add(txtContactoParticipante, gbc);
+
+        gbc.gridy = 21;
         formulario.add(btnAgregarParticipante, gbc);
 
-        gbc.gridy = 16;
+        gbc.gridy = 22;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weighty = 1;
         formulario.add(scrollParticipantes, gbc);
+
+        gbc.gridy = 23;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weighty = 0;
+        gbc.insets = new Insets(12, 6, 6, 6);
+        formulario.add(btnGenerarEnfrentamientos, gbc);
 
         JScrollPane scrollFormulario = new JScrollPane(formulario);
         scrollFormulario.setBorder(null);
@@ -219,6 +267,17 @@ public class PanelOrganizador extends JPanel {
     }
 
     /**
+     * Deja una lista desplegable con el mismo estilo del formulario.
+     *
+     * @param combo lista que se quiere preparar
+     */
+    private void prepararCombo(JComboBox<String> combo) {
+        combo.setFont(EstilosVisuales.FUENTE_NORMAL);
+        combo.setForeground(EstilosVisuales.TEXTO);
+        combo.setBackground(EstilosVisuales.SUPERFICIE);
+    }
+
+    /**
      * Abre el calendario y copia la fecha elegida en el campo correspondiente.
      *
      * @param campo campo de inicio o término que se debe actualizar
@@ -242,6 +301,20 @@ public class PanelOrganizador extends JPanel {
     }
 
     /**
+     * Convierte una fecha visible del formulario a LocalDate.
+     *
+     * @param campo campo donde se muestra la fecha
+     * @return fecha convertida o {@code null} si el campo esta vacio
+     */
+    private LocalDate leerFecha(JTextField campo) {
+        String texto = campo.getText().trim();
+        if (texto.isEmpty()) {
+            return null;
+        }
+        return LocalDate.parse(texto, FORMATO_FECHA);
+    }
+
+    /**
      * Permite que el controlador responda al botón Crear torneo.
      *
      * @param listener acción que manejará el controlador
@@ -257,6 +330,15 @@ public class PanelOrganizador extends JPanel {
      */
     public void agregarListenerParticipante(ActionListener listener) {
         btnAgregarParticipante.addActionListener(listener);
+    }
+
+    /**
+     * Permite que el controlador responda al boton Generar enfrentamientos.
+     *
+     * @param listener accion que manejara la generacion desde el controlador
+     */
+    public void agregarListenerGenerarEnfrentamientos(ActionListener listener) {
+        btnGenerarEnfrentamientos.addActionListener(listener);
     }
 
     /**
@@ -287,20 +369,47 @@ public class PanelOrganizador extends JPanel {
     }
 
     /**
+     * Obtiene el criterio marcado para decidir ganadores.
+     *
+     * @return criterio seleccionado en la lista
+     */
+    public String getCriterioGanador() {
+        return (String) cbCriterioGanador.getSelectedItem();
+    }
+
+    /**
+     * Lee la fecha inicial seleccionada en el calendario.
+     *
+     * @return fecha de inicio o {@code null} si no se ha elegido
+     */
+    public LocalDate getFechaInicio() {
+        return leerFecha(txtFechaInicio);
+    }
+
+    /**
+     * Lee la fecha final seleccionada en el calendario.
+     *
+     * @return fecha de termino o {@code null} si no se ha elegido
+     */
+    public LocalDate getFechaFin() {
+        return leerFecha(txtFechaFin);
+    }
+
+    /**
      * Lee la fecha inicial tal como aparece en pantalla.
      *
      * @return fecha de inicio mostrada en formato dd/MM/yyyy
      */
-    public String getFechaInicio() {
+    public String getTextoFechaInicio() {
         return txtFechaInicio.getText().trim();
     }
 
     /**
      * Lee la fecha final tal como aparece en pantalla.
      *
-     * @return fecha de término mostrada en formato dd/MM/yyyy
+     * @return fecha de termino mostrada en formato dd/MM/yyyy
      */
-    public String getFechaFin() {
+    public String getTextoFechaFin() {
         return txtFechaFin.getText().trim();
     }
 
@@ -314,10 +423,29 @@ public class PanelOrganizador extends JPanel {
     }
 
     /**
+     * Obtiene el tipo de participante elegido.
+     *
+     * @return Individuo o Equipo, segun lo seleccionado
+     */
+    public String getTipoParticipante() {
+        return (String) cbTipoParticipante.getSelectedItem();
+    }
+
+    /**
+     * Obtiene el contacto escrito para el participante.
+     *
+     * @return contacto ingresado, sin espacios en los extremos
+     */
+    public String getContactoParticipante() {
+        return txtContactoParticipante.getText().trim();
+    }
+
+    /**
      * Vacía el campo después de que el controlador agrega un participante.
      */
     public void limpiarNombreParticipante() {
         txtParticipante.setText("");
+        txtContactoParticipante.setText("");
     }
 
     /**

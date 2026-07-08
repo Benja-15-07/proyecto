@@ -1,14 +1,18 @@
 package logica;
 
+import java.time.LocalDate;
+
 public class Enfrentamiento {
     private Participante participante1;
     private Participante participante2;
+    private LocalDate fecha;
     private Resultado    resultado;
     private Participante ganador;
 
     public Enfrentamiento(Participante participante1, Participante participante2) {
         this.participante1 = participante1;
         this.participante2 = participante2;
+        this.fecha = null;
         this.resultado = null;
     }
 
@@ -44,6 +48,14 @@ public class Enfrentamiento {
 
     public Participante getParticipante2() {
         return participante2;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
     }
 
     public Resultado getResultado() {
