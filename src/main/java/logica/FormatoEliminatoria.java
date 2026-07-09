@@ -28,12 +28,6 @@ public class FormatoEliminatoria implements FormatoStrategy{
     }
 
     @Override
-    public LocalDate calcularFechaFin(LocalDate fechaInicio, int participantes) {
-        int enfrentamientos = participantes - 1;
-        return fechaInicio.plusDays(enfrentamientos - 1);
-    }
-
-    @Override
     public String getNombreFormato() {
         return "Eliminatoria";
     }

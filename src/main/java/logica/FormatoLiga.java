@@ -28,12 +28,6 @@ public class FormatoLiga implements FormatoStrategy {
     }
 
     @Override
-    public LocalDate calcularFechaFin(LocalDate fechaInicio, int participantes) {
-        int enfrentamientos = participantes * (participantes - 1) / 2;
-        return fechaInicio.plusDays(enfrentamientos);
-    }
-
-    @Override
     public String getNombreFormato() {
         return "Liga";
     }

@@ -12,7 +12,5 @@ public interface FormatoStrategy {
 
     public Bracket generarBracket(List<Enfrentamiento> enfrentamientos);
 
-    public LocalDate calcularFechaFin(LocalDate fechaInicio, int participantes);
-
     public String getNombreFormato();
 }
