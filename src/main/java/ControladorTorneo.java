@@ -8,11 +8,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Controlador encargado de gestionar las acciones relacionadas con el torneo.
+ */
 public class ControladorTorneo {
     private Organizador organizador;
     private Ventana ventana;
     private Map<String, Enfrentamiento> enfrentamientosMap;
 
+    /**
+     * Crea el controlador del torneo e inicializa los eventos de la interfaz.
+     *
+     * @param ventana ventana principal de la interfaz
+     */
     public ControladorTorneo(Ventana ventana){
         this.ventana = ventana;
         this.organizador = new Organizador("Organizador","");
