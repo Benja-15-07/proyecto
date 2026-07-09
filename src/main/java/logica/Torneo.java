@@ -10,6 +10,7 @@ public class Torneo {
     private LocalDate fechaFin;
     private FormatoStrategy formato;
     private CriterioStrategy criterio;
+    private int partidosPorDia;
 
     private List<Enfrentamiento> enfrentamientos;
     private int rondaActual;
@@ -22,12 +23,17 @@ public class Torneo {
     private List<Observer> observers;
 
     public Torneo(String nombre, String disciplina, LocalDate fechaInicio, FormatoStrategy formato, CriterioStrategy criterio) {
+        this(nombre, disciplina, fechaInicio, formato, criterio, 1);
+    }
+
+    public Torneo(String nombre, String disciplina, LocalDate fechaInicio, FormatoStrategy formato, CriterioStrategy criterio, int partidosPorDia) {
         this.nombre = nombre;
         this.disciplina = disciplina;
         this.fechaInicio = fechaInicio;
         this.fechaFin = null;
         this.formato = formato;
         this.criterio = criterio;
+        this.partidosPorDia = Math.max(1, partidosPorDia);
         this.participantes = new ArrayList<>();
         this.enfrentamientos = new ArrayList<>();
         this.clasificacion = new Clasificacion();
@@ -56,9 +62,8 @@ public class Torneo {
             enf.setRonda(rondaActual);
         }
 
-        fechaFin = formato.calcularFechaFin(fechaInicio, participantes.size());
-
-        calendario = new Calendario(enfrentamientos, fechaInicio);
+        calendario = new Calendario(enfrentamientos, fechaInicio, partidosPorDia);
+        fechaFin = calendario.getFechaFin();
         bracket = formato.generarBracket(enfrentamientos);
 
         actualizar();
@@ -79,7 +84,8 @@ public class Torneo {
 
         enfrentamientos.addAll(nuevaRonda);
 
-        calendario = new Calendario(enfrentamientos, fechaInicio);
+        calendario = new Calendario(enfrentamientos, fechaInicio, partidosPorDia);
+        fechaFin = calendario.getFechaFin();
         bracket = formato.generarBracket(enfrentamientos);
 
         actualizar();

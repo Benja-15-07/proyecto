@@ -11,8 +11,10 @@ public class PanelEstadoTorneo extends JPanel {
     private JTextArea txtDisciplina;
     private JTextArea txtFormato;
     private JTextArea txtCriterio;
+    private JTextArea txtFechaFin;
     private JTextArea txtParticipantes;
     private JTextArea txtEstado;
+    private JTextArea txtGanador;
 
     /**
      * Crea el panel de estado con tarjetas informativas adaptables.
@@ -21,15 +23,17 @@ public class PanelEstadoTorneo extends JPanel {
         this.setLayout(new BorderLayout());
         this.setOpaque(false);
 
-        JPanel contenido = new JPanel(new GridLayout(1, 6, 12, 0));
+        JPanel contenido = new JPanel(new GridLayout(1, 8, 12, 0));
         contenido.setOpaque(false);
 
         txtNombre = crearValor("Sin crear");
         txtDisciplina = crearValor("Sin definir");
         txtFormato = crearValor("Sin definir");
         txtCriterio = crearValor("Sin definir");
+        txtFechaFin = crearValor("Por calcular");
         txtParticipantes = crearValor("0");
         txtEstado = crearValor("Pendiente");
+        txtGanador = crearValor("Sin definir");
 
         contenido.add(crearTarjeta(
                 "Torneo", txtNombre, EstilosVisuales.PRIMARIO, new Color(240, 253, 244)));
@@ -40,10 +44,14 @@ public class PanelEstadoTorneo extends JPanel {
         contenido.add(crearTarjeta(
                 "Criterio", txtCriterio, EstilosVisuales.OLIVA, new Color(247, 254, 231)));
         contenido.add(crearTarjeta(
+                "Fecha fin", txtFechaFin, EstilosVisuales.ESMERALDA, new Color(236, 253, 245)));
+        contenido.add(crearTarjeta(
                 "Participantes", txtParticipantes, EstilosVisuales.VERDE_CLARO,
                 new Color(220, 252, 231)));
         contenido.add(crearTarjeta(
                 "Estado", txtEstado, EstilosVisuales.OLIVA, new Color(247, 254, 231)));
+        contenido.add(crearTarjeta(
+                "Ganador", txtGanador, EstilosVisuales.PRIMARIO, new Color(220, 252, 231)));
 
         this.add(contenido, BorderLayout.CENTER);
     }
@@ -102,7 +110,7 @@ public class PanelEstadoTorneo extends JPanel {
                                 String formato,
                                 int participantes,
                                 String estado) {
-        actualizarDatos(nombre, disciplina, formato, "Sin definir", participantes, estado);
+        actualizarDatos(nombre, disciplina, formato, "Sin definir", "Por calcular", participantes, estado);
     }
 
     /**
@@ -121,12 +129,58 @@ public class PanelEstadoTorneo extends JPanel {
                                 String criterio,
                                 int participantes,
                                 String estado) {
+        actualizarDatos(nombre, disciplina, formato, criterio, "Por calcular", participantes, estado);
+    }
+
+    /**
+     * Actualiza todos los datos visibles del resumen, incluyendo la fecha final calculada.
+     *
+     * @param nombre nombre del torneo
+     * @param disciplina disciplina seleccionada
+     * @param formato formato del torneo
+     * @param criterio criterio usado para elegir ganadores
+     * @param fechaFin fecha final calculada por la logica
+     * @param participantes cantidad de participantes
+     * @param estado estado actual
+     */
+    public void actualizarDatos(String nombre,
+                                String disciplina,
+                                String formato,
+                                String criterio,
+                                String fechaFin,
+                                int participantes,
+                                String estado) {
+        actualizarDatos(nombre, disciplina, formato, criterio, fechaFin, participantes, estado, "Sin definir");
+    }
+
+    /**
+     * Actualiza todos los datos visibles del resumen, incluyendo el ganador.
+     *
+     * @param nombre nombre del torneo
+     * @param disciplina disciplina seleccionada
+     * @param formato formato del torneo
+     * @param criterio criterio usado para elegir ganadores
+     * @param fechaFin fecha final calculada por la logica
+     * @param participantes cantidad de participantes
+     * @param estado estado actual
+     * @param ganador ganador del torneo si ya finalizo
+     */
+    public void actualizarDatos(String nombre,
+                                String disciplina,
+                                String formato,
+                                String criterio,
+                                String fechaFin,
+                                int participantes,
+                                String estado,
+                                String ganador) {
         actualizarValor(txtNombre, nombre);
         actualizarValor(txtDisciplina, disciplina);
         actualizarValor(txtFormato, formato);
         actualizarValor(txtCriterio, criterio);
+        actualizarValor(txtFechaFin, fechaFin);
         actualizarValor(txtParticipantes, String.valueOf(participantes));
         actualizarValor(txtEstado, estado);
+        actualizarValor(txtGanador, ganador);
     }
 
     /**

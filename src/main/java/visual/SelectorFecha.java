@@ -95,10 +95,10 @@ final class SelectorFecha extends JDialog {
     }
 
     /**
-     * Crea uno de los botones usados para cambiar de mes.
+     * Crea un boton simple para avanzar o retroceder entre meses.
      *
-     * @param texto símbolo que mostrará el botón
-     * @return botón de navegación preparado
+     * @param texto simbolo que se mostrara en pantalla
+     * @return boton listo para usar en la cabecera
      */
     private JButton crearBotonNavegacion(String texto) {
         JButton boton = new JButton(texto);

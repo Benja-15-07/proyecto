@@ -14,7 +14,7 @@ public class Ventana extends JFrame {
      * Crea la ventana principal y agrega el panel base del torneo.
      */
     public Ventana() {
-        super("Arena Manager | Gestión de Torneos");
+        super("Gestión de Torneos");
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(1050, 700));

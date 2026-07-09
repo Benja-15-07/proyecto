@@ -25,6 +25,9 @@ public class Enfrentamiento {
 
         this.resultado = new Resultado(puntuacion1, puntuacion2);
 
+        participante1.getEstadistica().agregarMarcador(puntuacion1, puntuacion2);
+        participante2.getEstadistica().agregarMarcador(puntuacion2, puntuacion1);
+
         this.ganador = criterio.evaluarResultado(this);
 
         if(ganador == participante1){

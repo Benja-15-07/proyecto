@@ -13,7 +13,11 @@ public class Organizador {
     }
 
     public void crearTorneo(String nombre, String disciplina, LocalDate fechaInicio, FormatoStrategy formato, CriterioStrategy criterio){
-        torneo = new Torneo(nombre, disciplina, fechaInicio, formato, criterio);
+        crearTorneo(nombre, disciplina, fechaInicio, formato, criterio, 1);
+    }
+
+    public void crearTorneo(String nombre, String disciplina, LocalDate fechaInicio, FormatoStrategy formato, CriterioStrategy criterio, int partidosPorDia){
+        torneo = new Torneo(nombre, disciplina, fechaInicio, formato, criterio, partidosPorDia);
     }
 
     public void addParticipante(Participante participante){

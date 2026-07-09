@@ -19,8 +19,8 @@ public class PanelOrganizador extends JPanel {
     private JComboBox<String> cbDisciplina;
     private JComboBox<String> cbFormato;
     private JComboBox<String> cbCriterioGanador;
+    private JComboBox<Integer> cbPartidosPorDia;
     private JTextField txtFechaInicio;
-    private JTextField txtFechaFin;
     private JButton btnCrear;
 
     private JTextField txtParticipante;
@@ -57,9 +57,11 @@ public class PanelOrganizador extends JPanel {
                 "Fútbol",
                 "Baloncesto",
                 "Vóleibol",
+                "Rugby",
+                "eSports",
                 "Tenis",
-                "Ajedrez",
-                "eSports"
+                "Pádel",
+                "Ajedrez"
         });
 
         JLabel lblFormato = new JLabel("Formato:");
@@ -75,13 +77,12 @@ public class PanelOrganizador extends JPanel {
                 "Binario"
         });
 
+        JLabel lblPartidosPorDia = new JLabel("Partidos por día:");
+        cbPartidosPorDia = new JComboBox<>(new Integer[]{1, 2, 3, 4});
+
         JLabel lblFechaInicio = new JLabel("Fecha inicio:");
         txtFechaInicio = new JTextField();
         JButton btnFechaInicio = new JButton("Elegir");
-
-        JLabel lblFechaFin = new JLabel("Fecha fin:");
-        txtFechaFin = new JTextField();
-        JButton btnFechaFin = new JButton("Elegir");
 
         btnCrear = new JButton("Crear torneo");
 
@@ -105,33 +106,31 @@ public class PanelOrganizador extends JPanel {
         EstilosVisuales.prepararEtiqueta(lblDisciplina);
         EstilosVisuales.prepararEtiqueta(lblFormato);
         EstilosVisuales.prepararEtiqueta(lblCriterioGanador);
+        EstilosVisuales.prepararEtiqueta(lblPartidosPorDia);
         EstilosVisuales.prepararEtiqueta(lblFechaInicio);
-        EstilosVisuales.prepararEtiqueta(lblFechaFin);
         EstilosVisuales.prepararEtiqueta(lblParticipante);
         EstilosVisuales.prepararEtiqueta(lblTipoParticipante);
         EstilosVisuales.prepararEtiqueta(lblContactoParticipante);
         EstilosVisuales.prepararCampo(txtNombre);
         EstilosVisuales.prepararCampo(txtFechaInicio);
-        EstilosVisuales.prepararCampo(txtFechaFin);
         EstilosVisuales.prepararCampo(txtParticipante);
         EstilosVisuales.prepararCampo(txtContactoParticipante);
         txtFechaInicio.setEditable(false);
-        txtFechaFin.setEditable(false);
         txtFechaInicio.setToolTipText("Selecciona la fecha desde el calendario");
-        txtFechaFin.setToolTipText("Selecciona la fecha desde el calendario");
         EstilosVisuales.prepararBotonPrincipal(btnCrear);
         EstilosVisuales.prepararBoton(btnAgregarParticipante, EstilosVisuales.SECUNDARIO);
         EstilosVisuales.prepararBoton(btnGenerarEnfrentamientos, EstilosVisuales.OLIVA);
         EstilosVisuales.prepararBoton(btnFechaInicio, EstilosVisuales.ESMERALDA);
-        EstilosVisuales.prepararBoton(btnFechaFin, EstilosVisuales.ESMERALDA);
 
         JPanel campoFechaInicio = crearCampoFecha(txtFechaInicio, btnFechaInicio);
-        JPanel campoFechaFin = crearCampoFecha(txtFechaFin, btnFechaFin);
 
         prepararCombo(cbFormato);
         prepararCombo(cbDisciplina);
         prepararCombo(cbCriterioGanador);
         prepararCombo(cbTipoParticipante);
+        cbPartidosPorDia.setFont(EstilosVisuales.FUENTE_NORMAL);
+        cbPartidosPorDia.setForeground(EstilosVisuales.TEXTO);
+        cbPartidosPorDia.setBackground(EstilosVisuales.SUPERFICIE);
 
         modeloParticipantes = new DefaultListModel<>();
         JList<String> listaParticipantes = new JList<>(modeloParticipantes);
@@ -185,19 +184,19 @@ public class PanelOrganizador extends JPanel {
 
         gbc.gridy = 9;
         gbc.weightx = 0;
-        formulario.add(lblFechaInicio, gbc);
+        formulario.add(lblPartidosPorDia, gbc);
 
         gbc.gridy = 10;
         gbc.weightx = 1;
-        formulario.add(campoFechaInicio, gbc);
+        formulario.add(cbPartidosPorDia, gbc);
 
         gbc.gridy = 11;
         gbc.weightx = 0;
-        formulario.add(lblFechaFin, gbc);
+        formulario.add(lblFechaInicio, gbc);
 
         gbc.gridy = 12;
         gbc.weightx = 1;
-        formulario.add(campoFechaFin, gbc);
+        formulario.add(campoFechaInicio, gbc);
 
         gbc.gridy = 13;
         gbc.insets = new Insets(12, 6, 6, 6);
@@ -248,7 +247,8 @@ public class PanelOrganizador extends JPanel {
         this.add(scrollFormulario, BorderLayout.CENTER);
 
         btnFechaInicio.addActionListener(e -> seleccionarFecha(txtFechaInicio));
-        btnFechaFin.addActionListener(e -> seleccionarFecha(txtFechaFin));
+        cbDisciplina.addActionListener(e -> ajustarTipoPorDisciplina());
+        ajustarTipoPorDisciplina();
     }
 
     /**
@@ -298,6 +298,41 @@ public class PanelOrganizador extends JPanel {
         if (fechaElegida != null) {
             campo.setText(fechaElegida.format(FORMATO_FECHA));
         }
+    }
+
+    /**
+     * Ajusta el tipo de participante segun la disciplina elegida.
+     */
+    private void ajustarTipoPorDisciplina() {
+        String disciplina = getDisciplinaSeleccionada();
+
+        if (esDisciplinaDeEquipo(disciplina)) {
+            cbTipoParticipante.setSelectedItem("Equipo");
+            cbTipoParticipante.setEnabled(false);
+        } else if (esDisciplinaIndividual(disciplina)) {
+            cbTipoParticipante.setSelectedItem("Individuo");
+            cbTipoParticipante.setEnabled(false);
+        } else {
+            cbTipoParticipante.setEnabled(true);
+        }
+    }
+
+    /**
+     * Disciplinas que normalmente se juegan por equipos.
+     */
+    private boolean esDisciplinaDeEquipo(String disciplina) {
+        return "Fútbol".equals(disciplina)
+                || "Vóleibol".equals(disciplina)
+                || "Rugby".equals(disciplina)
+                || "eSports".equals(disciplina);
+    }
+
+    /**
+     * Disciplinas que normalmente se juegan de forma individual.
+     */
+    private boolean esDisciplinaIndividual(String disciplina) {
+        return "Tenis".equals(disciplina)
+                || "Ajedrez".equals(disciplina);
     }
 
     /**
@@ -387,6 +422,15 @@ public class PanelOrganizador extends JPanel {
     }
 
     /**
+     * Obtiene el máximo de partidos que el organizador quiere por día.
+     *
+     * @return cantidad seleccionada en el formulario
+     */
+    public int getPartidosPorDia() {
+        return (Integer) cbPartidosPorDia.getSelectedItem();
+    }
+
+    /**
      * Lee la fecha inicial seleccionada en el calendario.
      *
      * @return fecha de inicio o {@code null} si no se ha elegido
@@ -396,12 +440,12 @@ public class PanelOrganizador extends JPanel {
     }
 
     /**
-     * Lee la fecha final seleccionada en el calendario.
+     * La fecha final ya no se ingresa desde el formulario.
      *
-     * @return fecha de termino o {@code null} si no se ha elegido
+     * @return {@code null}, porque la calcula la logica del torneo
      */
     public LocalDate getFechaFin() {
-        return leerFecha(txtFechaFin);
+        return null;
     }
 
     /**
@@ -419,7 +463,7 @@ public class PanelOrganizador extends JPanel {
      * @return fecha de termino mostrada en formato dd/MM/yyyy
      */
     public String getTextoFechaFin() {
-        return txtFechaFin.getText().trim();
+        return "";
     }
 
     /**

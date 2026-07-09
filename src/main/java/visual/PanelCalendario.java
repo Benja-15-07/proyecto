@@ -116,6 +116,11 @@ public class PanelCalendario extends JPanel {
         dibujarCalendario();
     }
 
+    /**
+     * Aplica el mismo estilo a los botones que cambian de mes.
+     *
+     * @param boton boton de navegacion que se va a preparar
+     */
     private void prepararBotonNavegacion(JButton boton) {
         EstilosVisuales.prepararBoton(boton, EstilosVisuales.ESMERALDA);
         boton.setPreferredSize(new Dimension(42, 32));
