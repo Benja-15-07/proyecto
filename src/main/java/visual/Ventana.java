@@ -30,22 +30,6 @@ public class Ventana extends JFrame {
     }
 
     /**
-     * Punto de entrada temporal para probar la interfaz.
-     *
-     * @param args argumentos de ejecución
-     */
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            try {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            } catch (Exception e) {
-                // Si no está disponible, Swing utiliza su apariencia predeterminada.
-            }
-            new Ventana();
-        });
-    }
-
-    /**
      * Da acceso al contenido de la ventana.
      *
      * @return panel raíz de la aplicación
