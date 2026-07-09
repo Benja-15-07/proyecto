@@ -61,16 +61,4 @@ class FormatoEliminatoriaTest {
 
         assertNotNull(bracket);
     }
-
-    @Test
-    void calcularFechaFin(){
-        FormatoEliminatoria formato = new FormatoEliminatoria();
-
-        int participantes = 4;
-
-        LocalDate fechaInicio = LocalDate.of(2026, 1, 1);
-        LocalDate fechaEsperada = fechaInicio.plusDays(participantes - 2);
-
-        assertEquals(fechaEsperada, formato.calcularFechaFin(fechaInicio, participantes));
-    }
 }

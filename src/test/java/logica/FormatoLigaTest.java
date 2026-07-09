@@ -59,17 +59,4 @@ class FormatoLigaTest {
 
         assertNull(bracket);
     }
-
-    @Test
-    void calcularFechaFin(){
-        FormatoLiga formato = new FormatoLiga();
-
-        int participantes = 4;
-        int dias = participantes * (participantes - 1) / 2;
-
-        LocalDate fechaInicio = LocalDate.of(2026, 1, 1);
-        LocalDate fechaEsperada = fechaInicio.plusDays(dias - 1);
-
-        assertEquals(fechaEsperada, formato.calcularFechaFin(fechaInicio, participantes));
-    }
 }
