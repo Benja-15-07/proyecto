@@ -63,7 +63,7 @@ public class Torneo {
         }
 
         calendario = new Calendario(enfrentamientos, fechaInicio, partidosPorDia);
-        fechaFin = calendario.getFechaFin();
+        fechaFin = calcularFechaFinTorneo();
         bracket = formato.generarBracket(enfrentamientos);
 
         actualizar();
@@ -85,10 +85,37 @@ public class Torneo {
         enfrentamientos.addAll(nuevaRonda);
 
         calendario = new Calendario(enfrentamientos, fechaInicio, partidosPorDia);
-        fechaFin = calendario.getFechaFin();
+        fechaFin = calcularFechaFinTorneo();
         bracket = formato.generarBracket(enfrentamientos);
 
         actualizar();
+    }
+
+    private LocalDate calcularFechaFinTorneo() {
+        if (calendario == null) {
+            return null;
+        }
+
+        if (!(formato instanceof FormatoEliminatoria)) {
+            return calendario.getFechaFin();
+        }
+
+        int participantesTotales = participantes.size();
+        if (participantesTotales < 2) {
+            return calendario.getFechaFin();
+        }
+
+        int diasTotales = 0;
+        int participantesRonda = participantesTotales;
+
+        while (participantesRonda >= 2) {
+            int partidosRonda = participantesRonda / 2;
+            int diasRonda = (int) Math.ceil((double) partidosRonda / partidosPorDia);
+            diasTotales += Math.max(1, diasRonda);
+            participantesRonda /= 2;
+        }
+
+        return fechaInicio.plusDays(diasTotales - 1L);
     }
 
     public void actualizar(){

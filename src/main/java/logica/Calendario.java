@@ -83,8 +83,22 @@ public class Calendario {
             return;
         }
 
-        int limiteDiario = calcularLimiteDiario(partidosPorDia);
-        List<Enfrentamiento> pendientes = new ArrayList<>(calendario);
+        LocalDate fechaActual = fechaInicio;
+        int rondaMinima = obtenerRondaMinima();
+        int rondaMaxima = obtenerRondaMaxima();
+
+        for (int ronda = rondaMinima; ronda <= rondaMaxima; ronda++) {
+            List<Enfrentamiento> pendientes = obtenerPendientesDeRonda(ronda);
+            if (pendientes.isEmpty()) {
+                continue;
+            }
+
+            int limiteDiario = calcularLimiteDiario(partidosPorDia, pendientes);
+            fechaActual = asignarRonda(pendientes, fechaActual, limiteDiario);
+        }
+    }
+
+    private LocalDate asignarRonda(List<Enfrentamiento> pendientes, LocalDate fechaInicio, int limiteDiario) {
         LocalDate fechaActual = fechaInicio;
 
         while (!pendientes.isEmpty()) {
@@ -106,11 +120,46 @@ public class Calendario {
 
             fechaActual = fechaActual.plusDays(1);
         }
+
+        return fechaActual;
     }
 
-    private int calcularLimiteDiario(int partidosPorDia) {
-        Set<Participante> participantes = new HashSet<>();
+    private int obtenerRondaMinima() {
+        int rondaMinima = Integer.MAX_VALUE;
+
         for (Enfrentamiento enfrentamiento : calendario) {
+            rondaMinima = Math.min(rondaMinima, enfrentamiento.getRonda());
+        }
+
+        return rondaMinima == Integer.MAX_VALUE ? 0 : rondaMinima;
+    }
+
+    private int obtenerRondaMaxima() {
+        int rondaMaxima = 0;
+
+        for (Enfrentamiento enfrentamiento : calendario) {
+            rondaMaxima = Math.max(rondaMaxima, enfrentamiento.getRonda());
+        }
+
+        return rondaMaxima;
+    }
+
+    private List<Enfrentamiento> obtenerPendientesDeRonda(int ronda) {
+        List<Enfrentamiento> pendientes = new ArrayList<>();
+
+        for (Enfrentamiento enfrentamiento : calendario) {
+            if (enfrentamiento.getRonda() == ronda) {
+                pendientes.add(enfrentamiento);
+            }
+        }
+
+        return pendientes;
+    }
+
+    private int calcularLimiteDiario(int partidosPorDia, List<Enfrentamiento> enfrentamientos) {
+        Set<Participante> participantes = new HashSet<>();
+
+        for (Enfrentamiento enfrentamiento : enfrentamientos) {
             participantes.add(enfrentamiento.getParticipante1());
             participantes.add(enfrentamiento.getParticipante2());
         }
