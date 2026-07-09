@@ -1,5 +1,8 @@
 package logica;
 
+/**
+ * Representa un participante de un torneo.
+ */
 public abstract class Participante {
     private static int contadorID = 1;
 
@@ -9,6 +12,12 @@ public abstract class Participante {
 
     private Estadistica estadistica;
 
+    /**
+     * Crea un participante.
+     *
+     * @param nombre nombre del participante
+     * @param contacto contacto del participante
+     */
     public Participante(String nombre, String contacto) {
         this.id = contadorID++;
         this.nombre = nombre;
@@ -17,18 +26,30 @@ public abstract class Participante {
         this.estadistica = new Estadistica();
     }
 
+    /**
+     * @return identificador único del participante
+     */
     public int getID() {
         return id;
     }
 
+    /**
+     * @return nombre del participante
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     * @return contacto del participante
+     */
     public String getContacto() {
         return contacto;
     }
 
+    /**
+     * @return estadística del participante
+     */
     public Estadistica getEstadistica() {
         return estadistica;
     }

@@ -13,7 +13,7 @@ public class CriterioBinario implements CriterioStrategy{
             return enfrentamiento.getParticipante2();
         }
         else {
-            throw new IllegalArgumentException("Resulatado binario inválido.");
+            throw new IllegalArgumentException("Resultatado binario inválido.");
         }
     }
 
